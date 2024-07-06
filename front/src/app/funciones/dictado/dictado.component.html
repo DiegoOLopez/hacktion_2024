@@ -1,6 +1,6 @@
-<div (window:keydown)="handleKeyDown($event)" (window:keyup)="handleKeyUp($event)">
+<div class="contenedor" (window:keydown)="handleKeyDown($event)" (window:keyup)="handleKeyUp($event)">
   <h2>Dictado de Voz: PRESIONA LA BARRA ESPACIADORA PARA COMENZAR EL DICTADO</h2>
-  <p>{{ transcript }}</p>
+  <p>{{ transcript }} Voz detectada</p>
 
   <button (click)="downloadTranscript()">Descargar Transcripción</button>
 
