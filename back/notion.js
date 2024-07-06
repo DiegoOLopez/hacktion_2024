@@ -55,7 +55,7 @@ async function insertarFilaEnNotion(datos) {
             }
         });
 
-        console.log('Datos insertados en Notion:', response);
+        console.log('Datos insertados en Notion:');
         return response;
     } catch (error) {
         console.error('Error al insertar datos en Notion:', error);

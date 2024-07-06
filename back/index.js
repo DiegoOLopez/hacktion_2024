@@ -35,26 +35,39 @@ function Sobreescribir(datos) {
 // Configuración de Express
 app.use(express.json()); // Para parsear JSON en las solicitudes POST
 
-// Ruta POST para sobreescribir el archivo de Excel
-app.post('/actualizar', (req, res) => {
-  const nuevosDatos = req.body.datos; // Suponiendo que envías los datos en el cuerpo como JSON
+app.post('/enunciado', async (req, res) => {
+  const sentencia_txt = req.body.transcripcion; // Suponiendo que envías los datos en el cuerpo como JSON
+  
+  try {
+    const resultado = await recopilacion_de_sentencia(sentencia_txt);
+    console.log(resultado[0]);
+    
+    const notion_data = {
+      numero: jugada.toString(),
+      down: resultado[0],
+      tipo_jugada: resultado[1],
+      yardas: resultado[2]
+    };
+    let array = [];
+    array.push(jugada);
+    array.push(resultado[0]);
+    array.push(resultado[1]);
+    array.push(resultado[2]);
+    insertarFilaEnNotion(notion_data);
 
-  const notion_data = {
-    numero: jugada.toString(),
-    down: nuevosDatos[0],
-    tipo_jugada: nuevosDatos[1],
-    yardas: nuevosDatos[2]
-  };
-  insertarFilaEnNotion(notion_data);
-  // lista
-  // Llamar a la función para sobreescribir el archivo de Excel con los nuevos datos
-  data.push(nuevosDatos)
-  nuevosDatos.unshift(jugada);
+    // Agregar número de jugada a los nuevos datos y actualizar el contador
     jugada++;
-  Sobreescribir(data);
-  res.send('Actualizacion correcta');
-});
 
+    // Agregar nuevos datos al arreglo principal y sobreescribir el archivo Excel
+    data.push(array);
+    Sobreescribir(data);
+
+    res.send('Actualización correcta');
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).send('Error al procesar la solicitud');
+  }
+});
 // Iniciar el servidor Express
 app.listen(port, () => {
   console.log('Servidor escuchando en http://localhost:${port}');

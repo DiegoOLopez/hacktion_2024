@@ -30,9 +30,7 @@ const elementos = textoSinCorchetes.split(',');
 // Eliminar los espacios en blanco y las comillas alrededor de los elementos
 const array = elementos.map(elemento => elemento.trim().replace(/^['"]|['"\]]$/g, ''));
 
-console.log(array); // ["Segundo", "pase", "5"]
-  return texto;
+  return array;
 }
-let sentencia_txt = "Segundo down pase completo de 5 yardas"
-resultado = recopilacion_de_sentencia(sentencia_txt);
+
 module.exports = { recopilacion_de_sentencia};
