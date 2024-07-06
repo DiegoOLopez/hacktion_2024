@@ -1,5 +1,5 @@
-import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -7,13 +7,11 @@ import { Observable } from 'rxjs';
 })
 export class TranscripcionService {
 
-  private http = inject (HttpClient)
+  private apiUrl = 'http://localhost:3000/enunciado'; // Asegúrate de usar http:// en la URL
 
-  private apiUrl = 'localhost:3000/procesar'; // Cambia esto por la URL de tu API
+  constructor(private http: HttpClient) {}
 
-
-  postTranscription (transcripcion: string){
-    return this.http.post<string>(this.apiUrl, transcripcion);
+  postTranscription(transcripcion: string): Observable<string> {
+    return this.http.post<string>(this.apiUrl, { transcripcion });
   }
-
 }
