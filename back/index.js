@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const { insertarFilaEnNotion } = require('./notion');
+const { recopilacion_de_sentencia } = require('./sentencia');
 
 const XLSX = require('xlsx');
 const fs = require('fs');

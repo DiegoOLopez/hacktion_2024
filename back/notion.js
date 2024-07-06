@@ -63,20 +63,5 @@ async function insertarFilaEnNotion(datos) {
     }
 }
 
-// Ejemplo de uso
-const nuevosDatos = {
-    numero: '1',
-    down: 'Primero',
-    tipo_jugada: 'Pase',
-    yardas: '+10'
-};
-
-insertarFilaEnNotion(nuevosDatos)
-    .then(() => {
-        console.log('Datos insertados exitosamente en Notion.');
-    })
-    .catch(error => {
-        console.error('Error al insertar datos en Notion:', error);
-    });
 
 module.exports = { insertarFilaEnNotion };
