@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const port = 3000;
+const { insertarFilaEnNotion } = require('./notion');
 
 const XLSX = require('xlsx');
 const fs = require('fs');
@@ -36,6 +37,15 @@ app.use(express.json()); // Para parsear JSON en las solicitudes POST
 // Ruta POST para sobreescribir el archivo de Excel
 app.post('/actualizar', (req, res) => {
   const nuevosDatos = req.body.datos; // Suponiendo que envías los datos en el cuerpo como JSON
+
+  const notion_data = {
+    numero: jugada.toString(),
+    down: nuevosDatos[0],
+    tipo_jugada: nuevosDatos[1],
+    yardas: nuevosDatos[2]
+  };
+  insertarFilaEnNotion(notion_data);
+  // lista
   // Llamar a la función para sobreescribir el archivo de Excel con los nuevos datos
   data.push(nuevosDatos)
   nuevosDatos.unshift(jugada);
@@ -48,3 +58,4 @@ app.post('/actualizar', (req, res) => {
 app.listen(port, () => {
   console.log('Servidor escuchando en http://localhost:${port}');
 });
+
