@@ -1,11 +1,10 @@
-//0ATx3LY7JIObTmyXJQTWKlfewH5WvGk_x1j9LHCdWz_trVL5H3-8A1t_5n1QV5l4kvToqoQ
 
 const {VertexAI} = require('@google-cloud/vertexai');
 
 /**
  * TODO(developer): Update these variables before running the sample.
  */
-async function generate_from_text_input(projectId = 'd-FL95Q19q7MQmFpd7hHD0Ty') {
+async function generate_from_text_input(projectId = '') {
   const vertexAI = new VertexAI({project: projectId, location: 'us-central1'});
 
   const generativeModel = vertexAI.getGenerativeModel({
