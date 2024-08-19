@@ -5,7 +5,7 @@ const port = 3000;
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 //TODO se tiene que agregar esto en una variable de entorno
 //aqui se agrega el token
-const genAI = new GoogleGenerativeAI("AIzaSyDbG0KxTyTKLbuTNfkyGnGsr6Ro4Tcdlcg");
+const genAI = new GoogleGenerativeAI("AIzaSyDpC1qFGxMlSzlWC6P-3eoqpkQsFmmJfoE");
 //se selecciona el tipo de modelo
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
@@ -14,7 +14,7 @@ const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 async function recopilacion_de_sentencia(sentencia) {
 
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
-  const prompt = "De la siguiente sentencia: "+ sentencia + ", regresame el siguiente formato, y solo ponlo entre corchetes, no quiero que digas nadax: ['Down (primer, segundo, tercero, cuarto', 'tipo de jugada (pase, carrera)', 'yardas (positivas o negativas y el numero)']"
+  const prompt = "De la siguiente sentencia: "+ sentencia + ", regresame el siguiente formato, y solo ponlo entre corchetes, no quiero que digas nada: ['Down (primer, segundo, tercero, cuarto', 'tipo de jugada (pase, carrera)', 'yardas (positivas o negativas y el numero)']"
   const result = await model.generateContent(prompt);
   const response = await result.response;
   const texto = response.text();
@@ -26,7 +26,7 @@ const elementos = textoSinCorchetes.split(',');
 
 // Eliminar los espacios en blanco y las comillas alrededor de los elementos
 const array = elementos.map(elemento => elemento.trim().replace(/^['"]|['"\]]$/g, ''));
-
+console.log(array);
   return array;
 }
 

@@ -50,9 +50,11 @@ app.use(express.json());
 // Ruta POST para manejar solicitudes en '/enunciado'
 app.post('/enunciado', async (req, res) => {
   // Extraemos el texto de la sentencia desde el cuerpo de la solicitud
-  const sentencia_txt = req.body.transcripcion; 
+  var sentencia_txt = req.body.transcripcion; 
   
   try {
+
+    sentencia_txt=`primer jugada equipos especiales kickoff tec ciudad en el pateo numero 37 como pateador la patada es hasta la yarda 0 fielder y taceador no se alcanzan a ver en esta toma seguramente sifielder numero 3 tacleador numero 84 el regresador llega hasta la yarda -17 de la udlap`;
     // Procesamos la sentencia utilizando la función 'recopilacion_de_sentencia'
     const resultado = await recopilacion_de_sentencia(sentencia_txt);
     console.log(resultado[0]);
@@ -91,6 +93,6 @@ app.post('/enunciado', async (req, res) => {
 });
 // Inicia el servidor Express y lo configura para escuchar en el puerto especificado
 app.listen(port, () => {
-  console.log('Servidor escuchando en http://localhost:${port}');
+  console.log(`Servidor escuchando en http://localhost:${port}`);
 });
 
