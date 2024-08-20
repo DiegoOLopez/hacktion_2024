@@ -1,7 +1,13 @@
 // Importamos la libreria de express
 const express = require('express');
+// Importamos la libreria de cors
+const cors = require('cors');
 // Dentro de la variable app, agregamos la funcion express
 const app = express();
+app.use(cors())
+// Middleware para analizar el cuerpo de las solicitudes
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }))
 // Le asignamos el puerto 3000
 const port = 3000;
 // Importamos la funcion insertar fila en notion
@@ -48,6 +54,15 @@ function Sobreescribir(datos) {
 app.use(express.json());
 
 // Ruta POST para manejar solicitudes en '/enunciado'
+app.post('/test', async (req, res, next) => {
+  try {
+    const sentencia_txt = req.body;
+    res.json(JSON.stringify(sentencia_txt.transcripcion));
+  } catch (error) {
+    next(error);
+  }
+});
+
 app.post('/enunciado', async (req, res) => {
   // Extraemos el texto de la sentencia desde el cuerpo de la solicitud
   const sentencia_txt = req.body.transcripcion; 
@@ -82,11 +97,11 @@ app.post('/enunciado', async (req, res) => {
     data.push(array);
     Sobreescribir(data);
     // Enviamos una respuesta de éxito al cliente
-    res.send('Actualización correcta');
+    res.json('Actualización correcta');
   } catch (error) {
     // En caso de error, lo registramos en la consola y enviamos una respuesta de error
     console.error('Error:', error);
-    res.status(500).send('Error al procesar la solicitud');
+    res.status(500).json('Error al procesar la solicitud');
   }
 });
 // Inicia el servidor Express y lo configura para escuchar en el puerto especificado

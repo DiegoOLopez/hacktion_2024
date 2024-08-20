@@ -2,9 +2,17 @@ import { Component, NgZone, HostListener } from '@angular/core';
 import { TranscripcionService } from '../transcripcion.service';
 import { CommonModule } from '@angular/common';
 
+// Importamos el servicio para la solicitud
+import { RequestSentenceService } from '../../services/request-sentence.service';
+import { response } from 'express';
+// Importamos el modelo
+import { postModel } from '../../shared/models/body_request.model';
+
 
 @Component({
   selector: 'app-dictation',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './dictado.component.html',
   styleUrls: ['./dictado.component.css']
 })
@@ -12,8 +20,10 @@ export class DictationComponent {
   recognition: any;
   transcript: string = '';
   isRecording: boolean = false;
+  // Asignamos la variable del modelo
+  post_model: postModel = new postModel();
 
-  constructor(private zone: NgZone) {
+  constructor(private request_service:RequestSentenceService, private zone: NgZone) {
     const { webkitSpeechRecognition }: IWindow = window as any;
     this.recognition = new webkitSpeechRecognition();
     this.recognition.continuous = true;
@@ -24,6 +34,18 @@ export class DictationComponent {
       const transcriptResult = event.results[event.results.length - 1][0].transcript;
       this.zone.run(() => {
         this.transcript += transcriptResult;
+        this.post_model.transcripcion = this.transcript
+        this.request_service.sendSentence(this.post_model).subscribe({
+          next: (transcripcion_completa) => {
+            console.log("Enviado")
+            alert("Enviado correctamente" + transcripcion_completa);
+          },
+          error:(error) => {
+            console.log("El error es" + JSON.stringify(error));
+            alert("Error" + JSON.stringify(error))
+          }
+        }
+        )
       });
     };
 
@@ -43,6 +65,7 @@ export class DictationComponent {
   handleKeyUp(event: KeyboardEvent) {
     if (event.code === 'Space' && this.isRecording) {
       this.stopDictation();
+
     }
   }
 
