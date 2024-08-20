@@ -54,15 +54,6 @@ function Sobreescribir(datos) {
 app.use(express.json());
 
 // Ruta POST para manejar solicitudes en '/enunciado'
-app.post('/test', async (req, res, next) => {
-  try {
-    const sentencia_txt = req.body;
-    res.json(JSON.stringify(sentencia_txt.transcripcion));
-  } catch (error) {
-    next(error);
-  }
-});
-
 app.post('/enunciado', async (req, res) => {
   // Extraemos el texto de la sentencia desde el cuerpo de la solicitud
   const sentencia_txt = req.body.transcripcion; 
@@ -87,8 +78,8 @@ app.post('/enunciado', async (req, res) => {
     array.push(resultado[1]);
     array.push(resultado[2]);
 
-    // Insertamos los datos en Notion
-    insertarFilaEnNotion(notion_data);
+    // Insertamos los datos en Notion, comentamos esta linea ya que de momento no usaremos las bases de datos de notion pero se deja la lògica por si acaso
+    //insertarFilaEnNotion(notion_data);
 
     // Incrementamos el contador de jugadas
     jugada++;
