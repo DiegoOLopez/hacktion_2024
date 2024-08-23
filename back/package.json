@@ -17,5 +17,8 @@
     "openai": "^4.0.0",
     "text-summary": "^2.0.4",
     "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5"
   }
 }
